@@ -4,6 +4,6 @@ include: "/SQL_VIEW/*.view.lkml"
 
 
 
-explore: z_tbl_stock_list_master {
+explore: stock_list_master {
   persist_for: "24 hours"
 }

@@ -1,4 +1,4 @@
-view: z_tbl_stock_list_master {
+view: stock_list_master {
   derived_table: {
     sql: select * from Z_tbl_stock_list_Master
       ;;

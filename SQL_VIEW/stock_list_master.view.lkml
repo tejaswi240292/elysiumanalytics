@@ -4,6 +4,8 @@ view: stock_list_master {
       ;;
   }
 
+
+
   measure: count {
     type: count
     drill_fields: [detail*]
@@ -38,6 +40,8 @@ view: stock_list_master {
     type: string
     sql: ${TABLE}.Mode ;;
   }
+
+
 
   dimension: is_updated {
     type: string

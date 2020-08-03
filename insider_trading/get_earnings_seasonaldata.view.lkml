@@ -7,32 +7,32 @@ view: get_earnings_seasonaldata  {
       from (SELECT ABC.*,ZES.Cal_QTR,ZES.[Cal_Year] FROM (SELECT [Date],[close],Flags,
       (SELECT TOP(1) [close]
       FROM  Stock_Quotes SQ
-      WHERE SQ.[Date]>S.[Date] AND FLags IN('P')
-      AND {% condition Symb %} Symbol {% endcondition %}
-      Order by SQ.[Date]) NextClose,
+      WHERE SQ.[Date]>S.[Date]
+      AND FLags IN('P')
+      AND Symbol= 'AAPL'/*@Symbol*/ Order by SQ.[Date]) NextClose,
 
       (SELECT TOp(1) [DATE]
       FROM  Stock_Quotes SQ
-      WHERE {% condition Symb %} Symbol {% endcondition %}
+      WHERE Symbol='AAPL'/*@Symbol*/
       AND FLags IN('P')
       AND SQ.[Date]>S.[Date]
       order by [DATE] ) NextDAte
       FROM Stock_Quotes S
-      WHERE {% condition Symb %} Symbol {% endcondition %}
-      AND {% condition frmdate %} [Date] {% endcondition %}
-      AND {% condition currdate %} [Date] {% endcondition %}
+      WHERE Symbol='AAPL'/*@Symbol*/
+      AND [Date]>= '01/01/2007' /*@FromDate*/
+      AND [Date]<= getdate() /*@Currdate*/
       AND  Flags IN('E')) ABC
       LEFT JOIN (SELECT *
                  from  [ZacksEarningSurpriseZES-1]
-                WHERE {% condition Symb %} Code {% endcondition %}
-                AND {% condition frmdate %} [Date] {% endcondition %}
-                AND {% condition currdate %} [Date] {% endcondition %} ) ZES
+                WHERE Code='AAPL'/*@Symbol*/
+                AND [Date]>='01/01/2007' /*@FromDate*/
+                AND [Date]<=getdate() /*@Currdate*/) ZES
       ON ZES.[DAte]=ABC.[DATE]) XYZ
       INNER JOIN (SELECT (SELECT dbo.fn_Get_PricePerc(Symbol,1,[DATE])) PricePerc_1,[DATE] MADte from  Stock_Quotes
 
-      WHERE {% condition Symb %} Symbol {% endcondition %}
-      AND  {% condition frmdate %} [Date] {% endcondition %}
-      AND {% condition currdate %} [Date] {% endcondition %}) Price
+      WHERE Symbol='AAPL'/*@Symbol*/
+      AND [DATE]>='01/01/2007' /*@FromDate*/
+      AND [DATE]<=getdate() /*@Currdate*/) Price
       ON Xyz.NextDAte=Price.MADte
       Order by Xyz.[Date]
        ;;

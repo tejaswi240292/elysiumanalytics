@@ -11,3 +11,7 @@ explore: stock_list_master {
 explore: symbol {
   persist_for: "24 hours"
 }
+
+explore: Insider_Trading {
+  persist_for: "24 hours"
+}

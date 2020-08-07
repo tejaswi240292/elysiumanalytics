@@ -29,7 +29,7 @@ view: Insider_Trading {
   }
 
   dimension: Ticker {
-    type: date
+    type: string
     sql: ${TABLE}.Ticker ;;
   }
 

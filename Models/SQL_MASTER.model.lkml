@@ -33,3 +33,15 @@ explore: ChartDisplay {
 explore: Financials_IncomeStat {
   persist_for: "24 hours"
 }
+
+explore: Financials_BalanceSheet {
+  persist_for: "24 hours"
+}
+
+explore: Financials_Cashflow {
+  persist_for: "24 hours"
+}
+
+explore: KeyRatios {
+  persist_for: "24 hours"
+}

@@ -1,6 +1,6 @@
 view: get_score {
 derived_table: {
-  sql: SELECT TOP (1) Ticker as Symbol , calendardate , fScore,mScore,zScore from [Key_Fundamentals].[dbo].[K2O_Fundamentals_Score]
+  sql: SELECT TOP (1) Ticker , calendardate , fScore,mScore,zScore from [Key_Fundamentals].[dbo].[K2O_Fundamentals_Score]
        where {% condition Symbol %} Ticker {% endcondition %} and  {% condition Datefilter %} calendardate {% endcondition %}
        order by calendardate desc
     ;;

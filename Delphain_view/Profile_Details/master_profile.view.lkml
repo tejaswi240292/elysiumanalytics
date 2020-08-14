@@ -5,16 +5,16 @@ view: master_profile {
       address_line_1 [addr1],
       address_line_2 [addr2],
       city+','+ State_Code+','+country_Code+','+Post_code as addr3,
-      (select marketshare from [dbo].[Get_USD_vals] (CP.Ticker,{%parameter date%}))  AS Marketshare,
+       usd.marketshare AS Marketshare,
        Phone_nbr [phone],
        fax_nbr [fax],
        Email,
        Comp_url,
-       --@Beta AS beta,
-       emp_cnt,
-       market_val,
+       usd.beta AS Beta,
+       cast(emp_cnt as NUMERIC(18,4)) as emp_cnt ,
+       cast(market_val as NUMERIC(18,4)) as market_val ,
        tot_revenue_f0 [totalrevenue],
-       shares_out,
+       cast(shares_out as NUMERIC(18,4)) as shares_out,
        [eps_act_fr0],
        [eps_mean_est_fr1],
        [eps_mean_est_fr2],
@@ -35,6 +35,10 @@ view: master_profile {
        FROM tbl_ZACKS_CP CP
        INNER JOIN Stock_Symbols SS
        ON CP.ticker=SS.[stock Symbol]
+       LEFT OUTER JOIN
+       (SELECT Symb,Dte,marketshare,beta
+        FROM [dbo].[Get_USD_vals] ('AAPL',{%parameter date%}) ) USD
+       ON CP.ticker = USD.Symb
        WHERE {% condition Symbol %} ticker {% endcondition %}
        ;;
   }
@@ -101,13 +105,18 @@ view: master_profile {
     sql: ${TABLE}.Comp_url ;;
   }
 
+  dimension: Beta {
+    type: number
+    sql: ${TABLE}.Beta ;;
+  }
+
   dimension: emp_cnt {
-    type: string
+    type: number
     sql: ${TABLE}.emp_cnt ;;
   }
 
   dimension: market_val {
-    type: string
+    type: number
     sql: ${TABLE}.market_val ;;
   }
 
@@ -117,7 +126,7 @@ view: master_profile {
   }
 
   dimension: shares_out {
-    type: string
+    type: number
     sql: ${TABLE}.shares_out ;;
   }
 
@@ -213,6 +222,7 @@ view: master_profile {
       fax,
       email,
       comp_url,
+      Beta,
       emp_cnt,
       market_val,
       totalrevenue,

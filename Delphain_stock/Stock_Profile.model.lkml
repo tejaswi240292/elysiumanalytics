@@ -1,6 +1,6 @@
 connection: "sql_server"
 
-include: "/Profile_Details/*.view.lkml"
+include: "/Delphain_view/Profile_Details/*.view.lkml"
 
 explore: get_score {
 }
@@ -19,3 +19,13 @@ explore: insider_details{
 
 explore: revenue{
 }
+
+explore: get_misc_values{
+}
+
+explore: get_revenue {}
+
+explore: get_score_1 {}
+
+
+explore: get_share_earnings_dividends {}

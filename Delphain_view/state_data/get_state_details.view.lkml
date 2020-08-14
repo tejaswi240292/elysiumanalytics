@@ -31,6 +31,28 @@ view: get_state_details {
       TMC.Symbol,
       TMCA.CurrState,
       TMC.[State]
+
+      UNION ALL
+
+    SELECT  Symbol,
+     Case when [50MA_200MA] ='Bullish' AND [20MA_100MA] = 'Bullish' AND [10MA_30MA]  = 'Bullish' THEN 'State_1'
+          when [50MA_200MA] = 'Bullish' AND [20MA_100MA]= 'Bullish' AND [10MA_30MA] = 'Bearish' THEN 'State_2'
+          when [50MA_200MA] ='Bullish' AND [20MA_100MA]= 'Bearish' AND [10MA_30MA] = 'Bullish' THEN 'State_3'
+          when [50MA_200MA] ='Bullish' AND [20MA_100MA]= 'Bearish' AND [10MA_30MA] = 'Bearish' THEN 'State_4'
+          when [50MA_200MA] ='Bearish' AND [20MA_100MA]= 'Bullish' AND [10MA_30MA] = 'Bullish' THEN 'State_5'
+          when [50MA_200MA] ='Bearish' AND [20MA_100MA]= 'Bullish' AND [10MA_30MA] = 'Bearish' THEN 'State_6'
+          when [50MA_200MA] ='Bearish' AND [20MA_100MA]= 'Bearish' AND [10MA_30MA] = 'Bullish' THEN 'State_7'
+          when [50MA_200MA] ='Bearish' AND [20MA_100MA]= 'Bearish' AND [10MA_30MA] = 'Bearish' THEN 'State_8'
+     END AS CurrState,
+   'Others' as Transtate,
+     1 as Probcnt
+      from tbl_Market_Condition
+      WHERE  {% condition Symb %} Symbol {% endcondition %}
+      AND  {% condition CurrDate %} Mrk_Dte {% endcondition %}
+      AND Trans_Flag = 'Y'
+      AND MAType = 'EMA'
+
+
        ;;
   }
 
@@ -49,6 +71,7 @@ view: get_state_details {
 
   dimension: symbol {
     type: string
+    primary_key: yes
     sql: ${TABLE}.Symbol ;;
   }
 

@@ -73,7 +73,7 @@ view: user_dashboard_1 {
     link:
     {
       label: "Open Dashboard"
-      url: "/dashboards/263?Symbol={{symbol._value}}"
+      url: "/dashboards/263?Symbol={{symbol._value}}&Date={{dte._value}}"
     }
   }
 
@@ -100,7 +100,7 @@ view: user_dashboard_1 {
     link:
     {
       label: "Open Dashboard"
-      url: "/dashboards/263?Symbol={{symbol._value}}"
+      url: "/dashboards/263?Symbol={{symbol._value}}&Date={{dte._value}}"
     }
   }
 
@@ -111,7 +111,7 @@ view: user_dashboard_1 {
     link:
     {
       label: "Open Dashboard"
-      url: "/dashboards/253?Symbol={{symbol._value}}"
+      url: "/dashboards/253?Symbol={{symbol._value}}&Date={{dte._value}}"
     }
   }
 
@@ -122,7 +122,7 @@ view: user_dashboard_1 {
     link:
     {
       label: "Open Dashboard"
-      url: "/dashboards/255?Symbol={{symbol._value}}"
+      url: "/dashboards/255?Symbol={{symbol._value}}&Date={{dte._value}}"
     }
   }
 
@@ -152,7 +152,7 @@ view: user_dashboard_1 {
     link:
     {
       label: "Open Dashboard"
-      url: "/dashboards/257?Symbol={{symbol._value}}"
+      url: "/dashboards/257?Symbol={{symbol._value}}&Date={{dte._value}}"
     }
   }
 
@@ -163,7 +163,7 @@ view: user_dashboard_1 {
     link:
     {
       label: "Open Dashboard"
-      url: "/dashboards/264?Symbol={{symbol._value}}"
+      url: "/dashboards/264?Symbol={{symbol._value}}&Date={{dte._value}}"
     }
 
   }

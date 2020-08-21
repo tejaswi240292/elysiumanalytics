@@ -73,7 +73,7 @@ view: user_dashboard_1 {
     link:
     {
       label: "Open Dashboard"
-      url: "/dashboards/263?Symbol={{symbol._value}}&Date={{dte._value}}"
+      url: "/dashboards/262?Symbol={{symbol._value}}&Date={{dte._value}}"
     }
   }
 

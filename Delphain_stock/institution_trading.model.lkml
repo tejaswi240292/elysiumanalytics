@@ -11,3 +11,11 @@ explore: get_investor_new {
 explore:get_investor_details{
 
 }
+
+explore: get_investor_increase {
+
+}
+
+explore: get_investor_decreased {
+
+}

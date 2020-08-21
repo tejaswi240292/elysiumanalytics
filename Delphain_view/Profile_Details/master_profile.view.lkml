@@ -37,9 +37,9 @@ view: master_profile {
        ON CP.ticker=SS.[stock Symbol]
        LEFT OUTER JOIN
        (SELECT Symb,Dte,marketshare,beta
-        FROM [dbo].[Get_USD_vals] ('AAPL',{%parameter date%}) ) USD
+        FROM [dbo].[Get_USD_vals] ({%parameter Symbol%},{%parameter date%}) ) USD
        ON CP.ticker = USD.Symb
-       WHERE {% condition Symbol %} ticker {% endcondition %}
+       WHERE  ticker = {%parameter Symbol%}
        ;;
   }
 
@@ -52,7 +52,11 @@ view: master_profile {
     type: date
   }
 
-  filter: Symbol {
+  #filter: Symbol {
+  #  type: string
+  #}
+
+  parameter: Symbol {
     type: string
   }
 

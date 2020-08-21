@@ -3,7 +3,7 @@ view: dynamic_line {
     sql: SELECT [Date], [Open],High,Low,[Close],[TC/YC] TC
       from Stock_Quotes_Adj
       where Symbol = 'AAPL'
-      and [Date] between '20200601' and '20200601'
+      and [Date] between '20070101' and '20200701'
        ;;
   }
 

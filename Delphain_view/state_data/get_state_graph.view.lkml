@@ -7,14 +7,22 @@ view: get_state_graph {
        ,[Close]
         ,[TC/YC] TC
 from Stock_Quotes_Adj
-where Symbol = 'AA'
-and [Date] between '20200101' and  getdate()
+where Symbol = {% parameter symbol %}
+and [Date] between '20200101' and  {% parameter dte %}
  ;;
   }
 
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  parameter: symbol {
+    type: string
+  }
+
+  parameter: dte {
+    type: date
   }
 
   dimension: date {

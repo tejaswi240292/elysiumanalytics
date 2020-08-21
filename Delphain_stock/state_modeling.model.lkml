@@ -29,6 +29,22 @@ explore: get_current_state  {
 explore: get_state_analysis {
 }
 
+explore: get_state_analysis_1 {
+}
+
 
 explore: get_state_graph{
+}
+
+explore: get_OHLC_data {
+
+}
+
+explore: get_OHLCA_data {
+  join: get_state_analysis_1 {
+    sql_on: ${get_OHLCA_data.Symbol}=${get_state_analysis_1.Symbol};;
+    type: left_outer
+    relationship: many_to_one
+  }
+
 }

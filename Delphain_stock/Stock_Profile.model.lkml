@@ -29,3 +29,5 @@ explore: get_score_1 {}
 
 
 explore: get_share_earnings_dividends {}
+
+explore: get_profile {}

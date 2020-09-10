@@ -75,15 +75,15 @@ SELECT   TOP(1)   Symbol,
       from tbl_Market_Condition
     where Trans_Flag= 'Y'
     and MAType = 'EMA'
-    AND Mrk_Dte <= '20200625'
-    AND Symbol = 'AA'
+    AND Mrk_Dte <= {% parameter dte %}
+    AND Symbol = {% parameter sym %}
    ORDER BY Mrk_Dte DESC) b
 on b.Symbol=a.Symbol
 left outer join Stock_Quotes_Adj c
 on b.Symbol=c.Symbol
-and c.[Date] = '20200625'
-WHERE a.Symbol='AA'
-AND   a.Mrk_Dte <= '20200625'
+and c.[Date] = {% parameter dte %}
+WHERE a.Symbol= {% parameter sym %}
+AND   a.Mrk_Dte <= {% parameter dte %}
 Order by a.Mrk_Dte DESC
  ;;
   }
@@ -91,6 +91,14 @@ Order by a.Mrk_Dte DESC
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  parameter: sym {
+    type: string
+  }
+
+  parameter: dte {
+    type: date
   }
 
   dimension: symbol {

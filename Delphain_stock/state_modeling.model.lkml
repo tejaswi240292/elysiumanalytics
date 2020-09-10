@@ -40,6 +40,9 @@ explore: get_OHLC_data {
 
 }
 
+explore: get_OHLCA1 {}
+
+
 explore: get_OHLCA_data {
   join: get_state_analysis_1 {
     sql_on: ${get_OHLCA_data.Symbol}=${get_state_analysis_1.Symbol};;

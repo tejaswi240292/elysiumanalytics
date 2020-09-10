@@ -39,7 +39,7 @@ FROM STOCK_SYMBOLS) ss
 LEFT OUTER JOIN
 (SELECT Symbol,[Date],[close] AS CurrClose
 from Stock_Quotes_Adj
-where [Date] =  '20200721' ) sqa
+where [Date] =   {% parameter dte %} ) sqa
 ON ss.[STOCK SYMBOL] = sqa.Symbol
 
 LEFT OUTER JOIN
@@ -54,7 +54,7 @@ LEFT OUTER JOIN
     when [50MA_200MA] ='Bearish' AND [20MA_100MA]= 'Bearish' AND [10MA_30MA] = 'Bearish' THEN 'State_8'
      END),1)  as SymState
 from tbl_Market_Condition
-WHERE Mrk_Dte = '20200721'
+WHERE Mrk_Dte = {% parameter dte %}
 AND MAType = 'EMA' ) tmc
 ON ss.[STOCK SYMBOL] = tmc.Symbol
 
@@ -64,8 +64,8 @@ LEFT OUTER JOIN
        ,[State]
 FROM    tbl_Market_condition
 WHERE   Trans_Flag= 'Y'
-and     Mrk_Dte <='20200721'
-and    Symbol   = 'AA'
+and     Mrk_Dte <= {% parameter dte %}
+and    Symbol   = {% parameter sym %}
 GROUP BY Symbol
        ,Mrk_Dte
        ,[State]
@@ -77,7 +77,7 @@ LEFT OUTER JOIN
        [Date],
        [close] as PriceOnEntryStateDate
 from Stock_Quotes_Adj
-WHERE Symbol = 'AA' ) sqaa
+WHERE Symbol = {% parameter sym %} ) sqaa
 ON sqaa.[Date] = tmca.LastEntryDate
 
 left outer join
@@ -99,18 +99,26 @@ left outer join
               AVGMOV_R_ST7,
               AVGMOV_R_ST8
   FROM tbl_State_Analysis
-  WHERE Symbol='AA'
-  AND Mrk_Dte <='20200721'
+  WHERE Symbol= {% parameter sym %}
+  AND Mrk_Dte <= {% parameter dte %}
   Order by Mrk_Dte DESC ) tsa
   on sqaa.Symbol=tsa.Symbol
 
-WHERE ss.[STOCK SYMBOL] = 'AA'
+WHERE ss.[STOCK SYMBOL] = {% parameter sym %}
  ;;
   }
 
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  parameter: sym {
+  type: string
+  }
+
+  parameter: dte {
+    type: date
   }
 
   dimension: stock_symbol {

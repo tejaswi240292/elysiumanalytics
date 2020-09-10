@@ -1,4 +1,4 @@
-view: user_dashboard_1 {
+view: explore_vw {
   derived_table: {
     sql: Select  {% parameter Sym %} as Symbol
             ,{% parameter date %} as Date
@@ -22,7 +22,7 @@ view: user_dashboard_1 {
 
   parameter: Sym {
     type: string
-   }
+  }
 
   parameter: date {
     type: date
@@ -159,7 +159,7 @@ view: user_dashboard_1 {
   dimension: key_ratios {
     sql: ${TABLE}."KEY_RATIOS" ;;
     type: string
-   drill_fields: []
+    drill_fields: []
     link:
     {
       label: "Open Dashboard"

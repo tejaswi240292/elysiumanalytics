@@ -68,3 +68,6 @@ explore: get_current_State_Stats {
 
 explore: get_top_investors {  persist_for: "24 hours"
   }
+
+explore: overview {  persist_for: "24 hours"
+}

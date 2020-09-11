@@ -19,7 +19,7 @@ view: get_top_investors {
 
           inner join [Key_Master_Db_Dev].[dbo].[tbl_ZACKS_CP] tzc
           ON C.ticker = tzc.ticker
-          WHERE C.ticker = {% parameter symb %}
+          WHERE C.ticker = COALESCE(NULLIF({% parameter symb %},'NULL'), (select top 1 symbol from Stock_Quotes_Adj where symbol not in ('SPX','NDX') and [Date]='20200722' order by [Close] desc))
           and  C.securitytype = 'SHR'
           and   C.calendardate = '20200331'
           ORDER BY OwnershipPerc DESC
@@ -33,6 +33,7 @@ view: get_top_investors {
 
   parameter: symb {
     type: string
+    default_value: "NULL"
   }
   dimension: investorname {
     type: string

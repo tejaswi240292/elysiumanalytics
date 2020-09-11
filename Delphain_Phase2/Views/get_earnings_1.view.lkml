@@ -94,7 +94,7 @@ on a.Symbol=Q.code
 and a.[Date]= Q.[Date]
 
 
-WHERE a.Symbol = {% parameter symb %}
+WHERE a.Symbol = COALESCE(NULLIF({% parameter symb %},'NULL'), (select top 1 symbol from Stock_Quotes_Adj where symbol not in ('SPX','NDX') and [Date]='20200722' order by [Close] desc))
 AND a.Flags = 'E'
 AND a.[Date] <= {% parameter dte %}
 AND YEAR(a.[DATE]) > 2006
@@ -111,6 +111,7 @@ Order by a.[Date]  desc
 
   parameter:symb {
     type: string
+    default_value: "NULL"
   }
 
   parameter:dte {

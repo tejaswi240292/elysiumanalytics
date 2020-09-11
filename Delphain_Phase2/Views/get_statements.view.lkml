@@ -69,7 +69,7 @@ view: get_statements {
 
             WHERE ID IN(SELECT ID  FROM (SELECT ROW_NUMBER() OVER (PARTITION BY [Ticker]  ORDER BY [ReportPeriod] DESC ) AS RowNo,ID
                                    FROM [Key_Fundamentals].[dbo].[K2O_US_Fundamentals_Stag]
-                     WHERE Ticker = {% parameter symb %}
+                     WHERE Ticker = COALESCE(NULLIF({% parameter symb %},'NULL'), (select top 1 symbol from Stock_Quotes_Adj where symbol not in ('SPX','NDX') and [Date]='20200722' order by [Close] desc))
                      AND [dimension]='ARQ'
                      AND ReportPeriod <= {% parameter dte %} ) a WHERE RowNo<=16)
 
@@ -83,6 +83,7 @@ view: get_statements {
 
   parameter: symb {
     type: string
+    default_value: "NULL"
   }
 
   parameter: dte {

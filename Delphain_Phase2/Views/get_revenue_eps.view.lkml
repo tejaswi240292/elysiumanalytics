@@ -27,7 +27,7 @@ view: get_revenue_eps {
                   [Key_Fundamentals].[dbo].[K2O_US_Fundamentals_Stag] kfs
                   on tzc.ticker=kfs.ticker
 
-                  where tzc.ticker = {% parameter symb %}
+                  where tzc.ticker = COALESCE(NULLIF({% parameter symb %},'NULL'), (select top 1 symbol from Stock_Quotes_Adj where symbol not in ('SPX','NDX') and [Date]='20200722' order by [Close] desc))
                    and kif.dimension = 'ARQ'
                   and kfs.dimension=kif.dimension
                   and kfs.CalendarDate=kif.CalendarDate) a
@@ -42,6 +42,7 @@ view: get_revenue_eps {
 
   parameter: symb {
     type: string
+    default_value: "NULL"
   }
 
   parameter: tot_quaters {

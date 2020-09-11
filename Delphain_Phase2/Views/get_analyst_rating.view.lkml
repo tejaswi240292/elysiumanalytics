@@ -9,7 +9,7 @@ from
 
 (select Ticker, CalendarDate,Dimension,fScore,mScore,zScore,Sloan_Ratio,ROW_NUMBER () over (partition by Ticker order by CalendarDate desc) as Date_Row
 from [Key_Fundamentals].[dbo].[K2O_Fundamentals_Score]
-where Ticker = {% parameter symb %}
+where Ticker = COALESCE(NULLIF({% parameter symb %},'NULL'), (select top 1 symbol from Stock_Quotes_Adj where symbol not in ('SPX','NDX') and [Date]='20200722' order by [Close] desc))
 and Dimension = 'ARQ') a
 
 left outer join [Key_Fundamentals].[dbo].K2O_US_Fundamentals_Grade  kuf
@@ -33,6 +33,7 @@ where a.Date_Row <= {% parameter tot_quaters %}
 
   parameter: symb  {
     type: string
+    default_value: "NULL"
   }
 
   dimension: ticker {

@@ -57,7 +57,9 @@ view: key_ratios {
                     ,CAST(PAYOUTRATIO*100 AS decimal(18,2))  PAYOUTRATIO
                     FROM [Key_Fundamentals].[dbo].[K2O_US_Fundamentals_Stag]
                     WHERE ID IN(SELECT ID  FROM (SELECT ROW_NUMBER() OVER (PARTITION BY [Ticker],CalendarDate ORDER BY [ReportPeriod] DESC ) AS RowNo,ID
-                   FROM [Key_Fundamentals].[dbo].[K2O_US_Fundamentals_Stag]  WHERE Ticker ={% parameter symb %} AND [dimension]='ARQ' AND ReportPeriod <='20200603' ) a WHERE RowNo=1)
+                   FROM [Key_Fundamentals].[dbo].[K2O_US_Fundamentals_Stag]
+                  WHERE Ticker =COALESCE(NULLIF({% parameter symb %},'NULL'), (select top 1 symbol from Stock_Quotes_Adj where symbol not in ('SPX','NDX') and [Date]='20200722' order by [Close] desc))
+                  AND [dimension]='ARQ' AND ReportPeriod <='20200603' ) a WHERE RowNo=1)
                     ORDER BY [ReportPeriod] DESC) ABC
        ;;
   }
@@ -69,6 +71,7 @@ view: key_ratios {
 
   parameter: symb {
     type: string
+    default_value: "NULL"
   }
 
   dimension: period {
